@@ -1,5 +1,3 @@
-// File: src/components/FlagFrenzy.tsx
-
 import React, { useEffect, useState } from "react";
 import { countries } from "../data/countries";
 import "./FlagFrenzy.css";
@@ -35,6 +33,7 @@ const generateQuestions = (count: number): Question[] => {
     ]);
     questions.push({ correct, options });
   }
+
   return questions;
 };
 
@@ -83,7 +82,7 @@ const FlagFrenzy: React.FC = () => {
 
   const handleFinish = () => {
     alert(`Quiz finished! Your score is ${score}/10.`);
-    // you can redirect to ResultScreen here
+    // You can navigate to a result screen here if needed
   };
 
   if (questions.length === 0) return <div>Loading...</div>;
@@ -94,14 +93,18 @@ const FlagFrenzy: React.FC = () => {
     <div className="flag-frenzy">
       <div className="header">
         <h2>🌍 Flag Frenzy</h2>
-        <p>Time Left: {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, "0")}</p>
+        <p>
+          Time Left: {Math.floor(timeLeft / 60)}:
+          {(timeLeft % 60).toString().padStart(2, "0")}
+        </p>
       </div>
 
       <img
-        src={new URL(`../assets${correct.flag}`, import.meta.url).href}
-        alt="Flag"
+        src={correct.flag}
+        alt={`Flag of ${correct.name}`}
         className="flag-image"
       />
+
 
       <form className="options">
         {options.map(opt => (
@@ -120,14 +123,14 @@ const FlagFrenzy: React.FC = () => {
       </form>
 
       <div className="actions">
-        {currentIndex > 0 && <button onClick={handlePrevious}>&lt;</button>}
+        {currentIndex > 0 && <button onClick={handlePrevious}>&lt; Previous</button>}
 
         {!submitted ? (
           <button disabled={!selected} onClick={handleSubmit}>Submit</button>
         ) : currentIndex === questions.length - 1 ? (
           <button onClick={handleFinish}>Finish</button>
         ) : (
-          <button onClick={handleNext}>&gt;</button>
+          <button onClick={handleNext}>Next &gt;</button>
         )}
       </div>
     </div>
